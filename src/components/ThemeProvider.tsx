@@ -18,16 +18,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   // Apply theme to document
   const applyTheme = useCallback((newTheme: Theme) => {
-    const root = document.documentElement;
-    
-    if (newTheme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
+    if (typeof document !== 'undefined') {
+      const root = document.documentElement;
+      
+      if (newTheme === "dark") {
+        root.classList.add("dark");
+      } else {
+        root.classList.remove("dark");
+      }
     }
   }, []);
 
-  // Initialize theme on mount
+  // Initialize theme on mount only
   useEffect(() => {
     setMounted(true);
     
@@ -49,13 +51,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const toggleTheme = useCallback(() => {
     const newTheme: Theme = theme === "light" ? "dark" : "light";
     setThemeState(newTheme);
-    localStorage.setItem("theme", newTheme);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem("theme", newTheme);
+    }
     applyTheme(newTheme);
   }, [theme, applyTheme]);
 
   const setTheme = useCallback((newTheme: Theme) => {
     setThemeState(newTheme);
-    localStorage.setItem("theme", newTheme);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem("theme", newTheme);
+    }
     applyTheme(newTheme);
   }, [applyTheme]);
 
@@ -65,6 +71,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     toggleTheme,
     setTheme,
   };
+
+  // Only render children after mount to prevent any theme-related hydration issues
+  if (!mounted) {
+    return (
+      <ThemeContext.Provider value={contextValue}>
+        <div style={{ visibility: 'hidden' }}>
+          {children}
+        </div>
+      </ThemeContext.Provider>
+    );
+  }
 
   return (
     <ThemeContext.Provider value={contextValue}>

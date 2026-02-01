@@ -87,11 +87,35 @@ export function ProfileSection({
   email?: string;
   className?: string;
 }) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Use inline styles during SSR to prevent hydration mismatch
+  const containerStyle = mounted ? {} : {
+    backgroundColor: '#f8fafc',
+    borderColor: '#e2e8f0',
+  };
+
+  const textStyle = mounted ? {} : {
+    color: '#0f172a',
+  };
+
+  const secondaryTextStyle = mounted ? {} : {
+    color: '#64748b',
+  };
+
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      <div className="w-10 h-10 rounded-full bg-[var(--muted-bg-hover)] flex items-center justify-center border border-[var(--border)]">
+      <div 
+        className="w-10 h-10 rounded-full flex items-center justify-center border"
+        style={containerStyle}
+      >
         <svg
-          className="w-5 h-5 text-[var(--foreground-secondary)]"
+          className="w-5 h-5"
+          style={secondaryTextStyle}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -106,13 +130,19 @@ export function ProfileSection({
       </div>
       <div className="flex-1 min-w-0 flex flex-col">
         <div className="flex items-center gap-2">
-          <p className="text-sm font-medium text-[var(--foreground)] truncate">
+          <p 
+            className="text-sm font-medium truncate"
+            style={textStyle}
+          >
             {username}
           </p>
           <AdminStatusBadge />
         </div>
         {email && (
-          <p className="text-xs text-[var(--foreground-secondary)] truncate">
+          <p 
+            className="text-xs truncate"
+            style={secondaryTextStyle}
+          >
             {email}
           </p>
         )}
