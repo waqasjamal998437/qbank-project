@@ -18,6 +18,7 @@ function VerifyOtpContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get('email') || '';
+  const next = searchParams.get('next') || '/dashboard';
 
   const [otp, setOtp] = useState<string[]>(['', '', '', '', '', '']);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -116,7 +117,7 @@ function VerifyOtpContent() {
 
       setSuccess(true);
       setTimeout(() => {
-        router.push('/dashboard');
+        router.push(next);
       }, 2000);
     } catch (err) {
       setError('An unexpected error occurred. Please try again.');

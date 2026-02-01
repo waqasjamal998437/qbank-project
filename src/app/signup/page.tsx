@@ -1,19 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { BookOpen, Eye, EyeOff, CheckCircle, ArrowRight, AlertCircle } from 'lucide-react';
+import { BookOpen, Eye, EyeOff, ArrowRight, AlertCircle } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 
-// Initialize Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-
-const supabase = supabaseUrl && supabaseAnonKey
-  ? createClient(supabaseUrl, supabaseAnonKey)
-  : null;
+// Type for Supabase client
+type SupabaseClient = ReturnType<typeof createClient> | null;
 
 interface SignupFormData {
   fullName: string;
@@ -55,6 +50,19 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [supabase, setSupabase] = useState<SupabaseClient>(null);
+
+  // Initialize Supabase client on client side
+  useEffect(() => {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (supabaseUrl && supabaseAnonKey) {
+      setSupabase(createClient(supabaseUrl, supabaseAnonKey));
+    } else {
+      setSupabase(null);
+    }
+  }, []);
 
   const {
     register,
@@ -75,6 +83,9 @@ export default function SignupPage() {
       return;
     }
 
+    // Get origin safely for client-side
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
+
     try {
       // Attempt to sign up with Supabase
       const { data: signupData, error: signupError } = await supabase.auth.signUp({
@@ -87,7 +98,7 @@ export default function SignupPage() {
             current_year: data.currentYear,
             graduation_year: data.graduationYear,
           },
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: `${origin}/auth/callback`,
         },
       });
 

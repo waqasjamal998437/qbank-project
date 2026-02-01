@@ -154,7 +154,14 @@ export async function middleware(request: NextRequest) {
   }
 
   // ========================================
-  // 5. Allow /verify-otp page access
+  // 6. Allow /auth/callback route for magic link exchange
+  // ========================================
+  if (pathname === "/auth/callback") {
+    return response;
+  }
+
+  // ========================================
+  // 7. Allow /verify-otp page access
   // ========================================
   if (pathname === "/verify-otp") {
     return response;
@@ -165,6 +172,8 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
+    // Allow auth callback route
+    "/auth/callback",
     // Protect admin routes
     "/admin/:path*",
     // Protect dashboard and profile routes
