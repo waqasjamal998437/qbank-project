@@ -1,0 +1,168 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================================================
+// Core Question Tables
+// ============================================================================
+
+model Question {
+  id                   String    @id @default(uuid())
+  stem                 String    @db.Text
+  explanation          String?   @db.Text
+  educational_objective String?  @db.Text
+  system_tag           String?   // e.g., "GI", "Renal", "Cardio"
+  discipline_tag       String?   // e.g., "Path", "Pharm", "Physio"
+  difficulty           String?   @default("medium") // easy, medium, hard
+  peer_performance     Float?    // Percentage of test-takers who got right
+  created_at           DateTime  @default(now())
+  updated_at           DateTime  @updatedAt
+
+  options              Option[]
+  user_responses       UserResponse[]
+  flashcards           Flashcard[]
+
+  @@index([system_tag])
+  @@index([discipline_tag])
+  @@index([created_at])
+}
+
+model Option {
+  id           String   @id @default(uuid())
+  question_id  String
+  text         String   @db.Text
+  is_correct   Boolean  @default(false)
+  option_index Int      // 0-3 for display order
+
+  question     Question @relation(fields: [question_id], references: [id], onDelete: Cascade)
+
+  user_responses UserResponse[]
+
+  @@unique([question_id, option_index])
+  @@index([question_id])
+}
+
+// ============================================================================
+// User Progress & Responses
+// ============================================================================
+
+model UserResponse {
+  id              String   @id @default(uuid())
+  user_id         String   // From Supabase Auth
+  question_id     String
+  selected_option_id String?
+  time_spent_ms   Int      @default(0)
+  is_correct      Boolean
+  created_at      DateTime @default(now())
+
+  question        Question @relation(fields: [question_id], references: [id], onDelete: Cascade)
+  selected_option Option?  @relation(fields: [selected_option_id], references: [id])
+
+  @@unique([user_id, question_id]) // One response per question per user
+  @@index([user_id])
+  @@index([question_id])
+  @@index([created_at])
+}
+
+// ============================================================================
+// Exam Session (Simulation State Persistence)
+// ============================================================================
+
+model ExamSession {
+  id              String   @id @default(uuid())
+  user_id         String
+  mode            String   // "timed", "tutor", "review"
+  question_ids    String[] // Array of question IDs in order
+  current_index   Int      @default(0)
+  responses       Json     // { questionId: { selectedIndex, timeSpent, flagged } }
+  time_remaining  Int      @default(0) // seconds
+  started_at      DateTime @default(now())
+  last_saved_at   DateTime @default(now())
+  is_completed    Boolean  @default(false)
+
+  @@index([user_id])
+  @@index([started_at])
+}
+
+// ============================================================================
+// Flashcards with SM2 Spaced Repetition
+// ============================================================================
+
+model Flashcard {
+  id               String   @id @default(uuid())
+  user_id          String?  // NULL for system-wide cards
+  question_id      String?  // Optional link to a question
+  front            String   @db.Text
+  back             String   @db.Text
+  category         String?  // Custom category/folder
+
+  // SM2 Algorithm fields
+  next_review_date DateTime @default(now())
+  interval         Int      @default(1) // Days until next review
+  ease_factor      Float    @default(2.5)
+  repetitions      Int      @default(0)
+  last_reviewed_at DateTime?
+
+  // Timestamps
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+
+  question         Question? @relation(fields: [question_id], references: [id])
+
+  @@index([user_id])
+  @@index([next_review_date]) // For finding cards due for review
+  @@index([category])
+}
+
+// ============================================================================
+// Existing Tables (Preserved)
+// ============================================================================
+
+model Counter {
+  id        Int      @id @default(1)
+  value     Int      @default(0)
+  updatedAt DateTime @updatedAt
+}
+
+model UserProgress {
+  id          String   @id @default(uuid())
+  questionId  String
+  isCorrect   Boolean
+  confidence  String   // "not-sure", "somewhat-sure", "highly-confident"
+  lastSeen    DateTime @default(now()) @updatedAt
+
+  @@unique([questionId])
+  @@index([questionId])
+  @@index([lastSeen])
+}
+
+model Video {
+  id          String   @id @default(uuid())
+  title       String
+  url         String
+  category    String
+  isHighYield Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+}
+
+model Quiz {
+  id            String   @id @default(uuid())
+  question      String
+  options       String[] // Array of 4 options
+  correctAnswer Int      // Index 0-3
+  explanation   String
+  category      String
+  subcategory   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([category])
+}
