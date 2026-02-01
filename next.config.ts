@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
   experimental: {
     // Remove any serverComponentsExternalPackages if it exists
   },
+  outputFileTracingIncludes: {
+    '/api/**/*': ['./node_modules/.prisma/client/**/*'],
+    '/*': ['./node_modules/.prisma/client/**/*'],
+  },
 };
 
 export default nextConfig;

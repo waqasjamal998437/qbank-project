@@ -3,9 +3,7 @@ import { db } from "../../../../lib/db";
 
 export async function GET() {
   try {
-    const flashcards = await db.flashcard.findMany({
-      orderBy: { createdAt: "desc" },
-    });
+    const flashcards = await db.flashcard.findMany();
 
     return NextResponse.json(flashcards);
   } catch (error) {
