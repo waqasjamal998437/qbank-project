@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Lock, Eye, EyeOff, Loader2 } from "lucide-react";
 
-export default function AdminLoginPage() {
+function LoginContent() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -127,5 +127,35 @@ export default function AdminLoginPage() {
         </div>
       </motion.div>
     </div>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        <div className="bg-slate-900 border border-slate-800 rounded-lg p-8 shadow-2xl animate-pulse">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-500/10 rounded-full mb-4">
+              <div className="w-8 h-8 bg-emerald-500/20 rounded animate-pulse" />
+            </div>
+            <div className="h-8 bg-slate-800 rounded w-3/4 mx-auto mb-2" />
+            <div className="h-4 bg-slate-800 rounded w-1/2 mx-auto" />
+          </div>
+          <div className="space-y-4">
+            <div className="h-12 bg-slate-800 rounded" />
+            <div className="h-12 bg-slate-800 rounded" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function AdminLoginPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <LoginContent />
+    </Suspense>
   );
 }

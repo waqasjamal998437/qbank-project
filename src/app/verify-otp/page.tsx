@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { CheckCircle, AlertCircle, Mail, ArrowLeft, RefreshCw } from 'lucide-react';
@@ -14,7 +14,7 @@ const supabase = supabaseUrl && supabaseAnonKey
   ? createClient(supabaseUrl, supabaseAnonKey)
   : null;
 
-export default function VerifyOtpPage() {
+function VerifyOtpContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get('email') || '';
@@ -360,5 +360,39 @@ export default function VerifyOtpPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen bg-gray-50 flex">
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900 p-12 flex-col justify-between">
+        <div className="animate-pulse">
+          <div className="w-10 h-10 bg-white/10 rounded-xl mb-8" />
+          <div className="h-12 bg-white/10 rounded w-3/4 mb-4" />
+          <div className="h-6 bg-white/10 rounded w-1/2" />
+        </div>
+      </div>
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-12">
+        <div className="w-full max-w-md animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-1/2 mb-2" />
+          <div className="h-4 bg-gray-200 rounded w-3/4 mb-8" />
+          <div className="flex justify-between gap-2 mb-8">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="w-14 h-14 bg-gray-200 rounded-xl" />
+            ))}
+          </div>
+          <div className="h-12 bg-gray-200 rounded" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function VerifyOtpPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <VerifyOtpContent />
+    </Suspense>
   );
 }
