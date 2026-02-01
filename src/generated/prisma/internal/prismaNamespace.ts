@@ -1185,7 +1185,7 @@ export const FlashcardScalarFieldEnum = {
   ease_factor: 'ease_factor',
   repetitions: 'repetitions',
   last_reviewed_at: 'last_reviewed_at',
-  created_at: 'created_at',
+  createdAt: 'createdAt',
   updated_at: 'updated_at'
 } as const
 

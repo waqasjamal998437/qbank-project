@@ -109,7 +109,7 @@ export async function GET(request: NextRequest) {
       cards: cards.map(card => ({
         ...card,
         next_review_date: card.next_review_date.toISOString(),
-        created_at: card.created_at.toISOString(),
+        createdAt: card.createdAt.toISOString(),
         updated_at: card.updated_at.toISOString(),
         last_reviewed_at: card.last_reviewed_at?.toISOString() || null,
       })),

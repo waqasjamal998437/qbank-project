@@ -50,7 +50,7 @@ export type FlashcardMinAggregateOutputType = {
   ease_factor: number | null
   repetitions: number | null
   last_reviewed_at: Date | null
-  created_at: Date | null
+  createdAt: Date | null
   updated_at: Date | null
 }
 
@@ -66,7 +66,7 @@ export type FlashcardMaxAggregateOutputType = {
   ease_factor: number | null
   repetitions: number | null
   last_reviewed_at: Date | null
-  created_at: Date | null
+  createdAt: Date | null
   updated_at: Date | null
 }
 
@@ -82,7 +82,7 @@ export type FlashcardCountAggregateOutputType = {
   ease_factor: number
   repetitions: number
   last_reviewed_at: number
-  created_at: number
+  createdAt: number
   updated_at: number
   _all: number
 }
@@ -112,7 +112,7 @@ export type FlashcardMinAggregateInputType = {
   ease_factor?: true
   repetitions?: true
   last_reviewed_at?: true
-  created_at?: true
+  createdAt?: true
   updated_at?: true
 }
 
@@ -128,7 +128,7 @@ export type FlashcardMaxAggregateInputType = {
   ease_factor?: true
   repetitions?: true
   last_reviewed_at?: true
-  created_at?: true
+  createdAt?: true
   updated_at?: true
 }
 
@@ -144,7 +144,7 @@ export type FlashcardCountAggregateInputType = {
   ease_factor?: true
   repetitions?: true
   last_reviewed_at?: true
-  created_at?: true
+  createdAt?: true
   updated_at?: true
   _all?: true
 }
@@ -247,7 +247,7 @@ export type FlashcardGroupByOutputType = {
   ease_factor: number
   repetitions: number
   last_reviewed_at: Date | null
-  created_at: Date
+  createdAt: Date
   updated_at: Date
   _count: FlashcardCountAggregateOutputType | null
   _avg: FlashcardAvgAggregateOutputType | null
@@ -286,7 +286,7 @@ export type FlashcardWhereInput = {
   ease_factor?: Prisma.FloatFilter<"Flashcard"> | number
   repetitions?: Prisma.IntFilter<"Flashcard"> | number
   last_reviewed_at?: Prisma.DateTimeNullableFilter<"Flashcard"> | Date | string | null
-  created_at?: Prisma.DateTimeFilter<"Flashcard"> | Date | string
+  createdAt?: Prisma.DateTimeFilter<"Flashcard"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Flashcard"> | Date | string
   question?: Prisma.XOR<Prisma.QuestionNullableScalarRelationFilter, Prisma.QuestionWhereInput> | null
 }
@@ -303,7 +303,7 @@ export type FlashcardOrderByWithRelationInput = {
   ease_factor?: Prisma.SortOrder
   repetitions?: Prisma.SortOrder
   last_reviewed_at?: Prisma.SortOrderInput | Prisma.SortOrder
-  created_at?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   question?: Prisma.QuestionOrderByWithRelationInput
 }
@@ -323,7 +323,7 @@ export type FlashcardWhereUniqueInput = Prisma.AtLeast<{
   ease_factor?: Prisma.FloatFilter<"Flashcard"> | number
   repetitions?: Prisma.IntFilter<"Flashcard"> | number
   last_reviewed_at?: Prisma.DateTimeNullableFilter<"Flashcard"> | Date | string | null
-  created_at?: Prisma.DateTimeFilter<"Flashcard"> | Date | string
+  createdAt?: Prisma.DateTimeFilter<"Flashcard"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Flashcard"> | Date | string
   question?: Prisma.XOR<Prisma.QuestionNullableScalarRelationFilter, Prisma.QuestionWhereInput> | null
 }, "id">
@@ -340,7 +340,7 @@ export type FlashcardOrderByWithAggregationInput = {
   ease_factor?: Prisma.SortOrder
   repetitions?: Prisma.SortOrder
   last_reviewed_at?: Prisma.SortOrderInput | Prisma.SortOrder
-  created_at?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.FlashcardCountOrderByAggregateInput
   _avg?: Prisma.FlashcardAvgOrderByAggregateInput
@@ -364,7 +364,7 @@ export type FlashcardScalarWhereWithAggregatesInput = {
   ease_factor?: Prisma.FloatWithAggregatesFilter<"Flashcard"> | number
   repetitions?: Prisma.IntWithAggregatesFilter<"Flashcard"> | number
   last_reviewed_at?: Prisma.DateTimeNullableWithAggregatesFilter<"Flashcard"> | Date | string | null
-  created_at?: Prisma.DateTimeWithAggregatesFilter<"Flashcard"> | Date | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Flashcard"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Flashcard"> | Date | string
 }
 
@@ -379,7 +379,7 @@ export type FlashcardCreateInput = {
   ease_factor?: number
   repetitions?: number
   last_reviewed_at?: Date | string | null
-  created_at?: Date | string
+  createdAt?: Date | string
   updated_at?: Date | string
   question?: Prisma.QuestionCreateNestedOneWithoutFlashcardsInput
 }
@@ -396,7 +396,7 @@ export type FlashcardUncheckedCreateInput = {
   ease_factor?: number
   repetitions?: number
   last_reviewed_at?: Date | string | null
-  created_at?: Date | string
+  createdAt?: Date | string
   updated_at?: Date | string
 }
 
@@ -411,7 +411,7 @@ export type FlashcardUpdateInput = {
   ease_factor?: Prisma.FloatFieldUpdateOperationsInput | number
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
   last_reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   question?: Prisma.QuestionUpdateOneWithoutFlashcardsNestedInput
 }
@@ -428,7 +428,7 @@ export type FlashcardUncheckedUpdateInput = {
   ease_factor?: Prisma.FloatFieldUpdateOperationsInput | number
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
   last_reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -444,7 +444,7 @@ export type FlashcardCreateManyInput = {
   ease_factor?: number
   repetitions?: number
   last_reviewed_at?: Date | string | null
-  created_at?: Date | string
+  createdAt?: Date | string
   updated_at?: Date | string
 }
 
@@ -459,7 +459,7 @@ export type FlashcardUpdateManyMutationInput = {
   ease_factor?: Prisma.FloatFieldUpdateOperationsInput | number
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
   last_reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -475,7 +475,7 @@ export type FlashcardUncheckedUpdateManyInput = {
   ease_factor?: Prisma.FloatFieldUpdateOperationsInput | number
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
   last_reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -501,7 +501,7 @@ export type FlashcardCountOrderByAggregateInput = {
   ease_factor?: Prisma.SortOrder
   repetitions?: Prisma.SortOrder
   last_reviewed_at?: Prisma.SortOrder
-  created_at?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
 
@@ -523,7 +523,7 @@ export type FlashcardMaxOrderByAggregateInput = {
   ease_factor?: Prisma.SortOrder
   repetitions?: Prisma.SortOrder
   last_reviewed_at?: Prisma.SortOrder
-  created_at?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
 
@@ -539,7 +539,7 @@ export type FlashcardMinOrderByAggregateInput = {
   ease_factor?: Prisma.SortOrder
   repetitions?: Prisma.SortOrder
   last_reviewed_at?: Prisma.SortOrder
-  created_at?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
 
@@ -614,7 +614,7 @@ export type FlashcardCreateWithoutQuestionInput = {
   ease_factor?: number
   repetitions?: number
   last_reviewed_at?: Date | string | null
-  created_at?: Date | string
+  createdAt?: Date | string
   updated_at?: Date | string
 }
 
@@ -629,7 +629,7 @@ export type FlashcardUncheckedCreateWithoutQuestionInput = {
   ease_factor?: number
   repetitions?: number
   last_reviewed_at?: Date | string | null
-  created_at?: Date | string
+  createdAt?: Date | string
   updated_at?: Date | string
 }
 
@@ -674,7 +674,7 @@ export type FlashcardScalarWhereInput = {
   ease_factor?: Prisma.FloatFilter<"Flashcard"> | number
   repetitions?: Prisma.IntFilter<"Flashcard"> | number
   last_reviewed_at?: Prisma.DateTimeNullableFilter<"Flashcard"> | Date | string | null
-  created_at?: Prisma.DateTimeFilter<"Flashcard"> | Date | string
+  createdAt?: Prisma.DateTimeFilter<"Flashcard"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Flashcard"> | Date | string
 }
 
@@ -689,7 +689,7 @@ export type FlashcardCreateManyQuestionInput = {
   ease_factor?: number
   repetitions?: number
   last_reviewed_at?: Date | string | null
-  created_at?: Date | string
+  createdAt?: Date | string
   updated_at?: Date | string
 }
 
@@ -704,7 +704,7 @@ export type FlashcardUpdateWithoutQuestionInput = {
   ease_factor?: Prisma.FloatFieldUpdateOperationsInput | number
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
   last_reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -719,7 +719,7 @@ export type FlashcardUncheckedUpdateWithoutQuestionInput = {
   ease_factor?: Prisma.FloatFieldUpdateOperationsInput | number
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
   last_reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -734,7 +734,7 @@ export type FlashcardUncheckedUpdateManyWithoutQuestionInput = {
   ease_factor?: Prisma.FloatFieldUpdateOperationsInput | number
   repetitions?: Prisma.IntFieldUpdateOperationsInput | number
   last_reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -752,7 +752,7 @@ export type FlashcardSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   ease_factor?: boolean
   repetitions?: boolean
   last_reviewed_at?: boolean
-  created_at?: boolean
+  createdAt?: boolean
   updated_at?: boolean
   question?: boolean | Prisma.Flashcard$questionArgs<ExtArgs>
 }, ExtArgs["result"]["flashcard"]>
@@ -769,7 +769,7 @@ export type FlashcardSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   ease_factor?: boolean
   repetitions?: boolean
   last_reviewed_at?: boolean
-  created_at?: boolean
+  createdAt?: boolean
   updated_at?: boolean
   question?: boolean | Prisma.Flashcard$questionArgs<ExtArgs>
 }, ExtArgs["result"]["flashcard"]>
@@ -786,7 +786,7 @@ export type FlashcardSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   ease_factor?: boolean
   repetitions?: boolean
   last_reviewed_at?: boolean
-  created_at?: boolean
+  createdAt?: boolean
   updated_at?: boolean
   question?: boolean | Prisma.Flashcard$questionArgs<ExtArgs>
 }, ExtArgs["result"]["flashcard"]>
@@ -803,11 +803,11 @@ export type FlashcardSelectScalar = {
   ease_factor?: boolean
   repetitions?: boolean
   last_reviewed_at?: boolean
-  created_at?: boolean
+  createdAt?: boolean
   updated_at?: boolean
 }
 
-export type FlashcardOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "question_id" | "front" | "back" | "category" | "next_review_date" | "interval" | "ease_factor" | "repetitions" | "last_reviewed_at" | "created_at" | "updated_at", ExtArgs["result"]["flashcard"]>
+export type FlashcardOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "question_id" | "front" | "back" | "category" | "next_review_date" | "interval" | "ease_factor" | "repetitions" | "last_reviewed_at" | "createdAt" | "updated_at", ExtArgs["result"]["flashcard"]>
 export type FlashcardInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   question?: boolean | Prisma.Flashcard$questionArgs<ExtArgs>
 }
@@ -835,7 +835,7 @@ export type $FlashcardPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     ease_factor: number
     repetitions: number
     last_reviewed_at: Date | null
-    created_at: Date
+    createdAt: Date
     updated_at: Date
   }, ExtArgs["result"]["flashcard"]>
   composites: {}
@@ -1272,7 +1272,7 @@ export interface FlashcardFieldRefs {
   readonly ease_factor: Prisma.FieldRef<"Flashcard", 'Float'>
   readonly repetitions: Prisma.FieldRef<"Flashcard", 'Int'>
   readonly last_reviewed_at: Prisma.FieldRef<"Flashcard", 'DateTime'>
-  readonly created_at: Prisma.FieldRef<"Flashcard", 'DateTime'>
+  readonly createdAt: Prisma.FieldRef<"Flashcard", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Flashcard", 'DateTime'>
 }
     
