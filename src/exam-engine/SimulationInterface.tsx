@@ -13,15 +13,12 @@ export default function SimulationInterface() {
     timeLeft,
     ended,
     reviewMode,
-    next,
-    prev,
     jump,
-    flag,
-    selections,
     flagged,
     endBlock,
     enterReview,
     setQuestions,
+    selections,
   } = useExamStore();
 
   // Load questions on mount
@@ -82,7 +79,8 @@ export default function SimulationInterface() {
           <OptionsPanel
             options={questions[current].options}
             selected={selections[current]}
-            onSelect={(val) => useExamStore.getState().select(current, val)}
+            struck={new Set<number>()}
+            questionId={questions[current]?.id}
           />
         </div>
       </div>
