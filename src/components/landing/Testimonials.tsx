@@ -31,14 +31,14 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section id="reviews" className="py-24 bg-white">
+    <section id="reviews" className="py-24 bg-white dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Loved by Medical Students
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-600 dark:text-slate-400">
             Join thousands of satisfied students who have transformed their exam preparation.
           </p>
         </div>
@@ -48,7 +48,7 @@ export default function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <div 
               key={index}
-              className="p-8 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-xl hover:shadow-gray-200/50 transition-all duration-300 border border-transparent hover:border-gray-100"
+              className="p-8 bg-gray-50 dark:bg-slate-900 rounded-2xl hover:bg-white dark:hover:bg-slate-800 hover:shadow-xl dark:hover:shadow-slate-950/50 transition-all duration-300 border border-transparent hover:border-gray-100 dark:hover:border-slate-700"
             >
               {/* Rating */}
               <div className="flex items-center space-x-1 mb-4">
@@ -58,7 +58,7 @@ export default function Testimonials() {
               </div>
 
               {/* Quote */}
-              <p className="text-gray-600 leading-relaxed mb-6">
+              <p className="text-gray-600 dark:text-slate-400 leading-relaxed mb-6">
                 "{testimonial.quote}"
               </p>
 
@@ -71,10 +71,10 @@ export default function Testimonials() {
                 />
                 <div>
                   <div className="flex items-center space-x-1">
-                    <span className="font-semibold text-gray-900">{testimonial.name}</span>
-                    <CheckCircle className="w-4 h-4 text-green-500" />
+                    <span className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</span>
+                    <CheckCircle className="w-4 h-4 text-green-500 dark:text-green-400" />
                   </div>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 dark:text-slate-400">
                     {testimonial.university} • {testimonial.year}
                   </p>
                 </div>

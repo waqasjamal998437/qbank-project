@@ -13,9 +13,9 @@ export function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 w-full border-b border-slate-800 bg-slate-950/50 backdrop-blur-md z-50">
+    <nav className="fixed top-0 w-full border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md z-50">
       <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-2 font-bold text-indigo-400">
+        <div className="flex items-center gap-2 font-bold text-indigo-500 dark:text-indigo-400">
           <Activity size={20} />
           <span>T3_APP</span>
         </div>
@@ -26,8 +26,8 @@ export function Navbar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-2 text-sm font-medium transition-colors hover:text-indigo-400",
-                pathname === item.href ? "text-indigo-400" : "text-slate-400"
+                "flex items-center gap-2 text-sm font-medium transition-colors hover:text-indigo-500 dark:hover:text-indigo-400",
+                pathname === item.href ? "text-indigo-500 dark:text-indigo-400" : "text-slate-600 dark:text-slate-400"
               )}
             >
               <item.icon size={16} />

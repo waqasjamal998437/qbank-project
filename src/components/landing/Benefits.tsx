@@ -25,14 +25,14 @@ const benefits = [
 
 export default function Benefits() {
   return (
-    <section id="features" className="py-24 bg-white">
+    <section id="features" className="py-24 bg-white dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Everything You Need to Succeed
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-600 dark:text-slate-400">
             Our comprehensive platform provides all the tools medical students need to excel in their exams.
           </p>
         </div>
@@ -42,7 +42,7 @@ export default function Benefits() {
           {benefits.map((benefit, index) => (
             <div 
               key={index}
-              className="group p-8 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-xl hover:shadow-gray-200/50 transition-all duration-300 border border-transparent hover:border-gray-100"
+              className="group p-8 bg-gray-50 dark:bg-slate-900 rounded-2xl hover:bg-white dark:hover:bg-slate-800 hover:shadow-xl dark:hover:shadow-slate-950/50 transition-all duration-300 border border-transparent hover:border-gray-100 dark:hover:border-slate-700"
             >
               {/* Icon */}
               <div className={`w-14 h-14 bg-gradient-to-br ${benefit.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
@@ -50,12 +50,12 @@ export default function Benefits() {
               </div>
 
               {/* Title */}
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
                 {benefit.title}
               </h3>
 
               {/* Description */}
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-600 dark:text-slate-400 leading-relaxed">
                 {benefit.description}
               </p>
             </div>

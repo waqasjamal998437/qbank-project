@@ -53,14 +53,14 @@ const pricingPlans = [
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="py-24 bg-gray-50">
+    <section id="pricing" className="py-24 bg-gray-50 dark:bg-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Simple, Transparent Pricing
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-600 dark:text-slate-400">
             Choose the plan that fits your study needs. All plans include a 14-day free trial.
           </p>
         </div>
@@ -70,10 +70,10 @@ export default function Pricing() {
           {pricingPlans.map((plan, index) => (
             <div 
               key={index}
-              className={`relative p-8 bg-white rounded-2xl transition-all duration-300 ${
+              className={`relative p-8 bg-white dark:bg-slate-950 rounded-2xl transition-all duration-300 ${
                 plan.popular 
-                  ? 'shadow-2xl shadow-indigo-200/50 border-2 border-indigo-500 scale-105 z-10' 
-                  : 'shadow-lg shadow-gray-200/50 border border-gray-100 hover:shadow-xl'
+                  ? 'shadow-2xl shadow-indigo-200/50 dark:shadow-indigo-900/30 border-2 border-indigo-500 dark:border-indigo-600 scale-105 z-10' 
+                  : 'shadow-lg shadow-gray-200/50 dark:shadow-slate-950/50 border border-gray-100 dark:border-slate-800 hover:shadow-xl dark:hover:shadow-slate-950/70'
               }`}
             >
               {/* Popular Badge */}
@@ -88,26 +88,26 @@ export default function Pricing() {
 
               {/* Plan Name */}
               <div className="text-center mb-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                   {plan.name}
                 </h3>
-                <p className="text-gray-500 text-sm">
+                <p className="text-gray-500 dark:text-slate-400 text-sm">
                   {plan.description}
                 </p>
               </div>
 
               {/* Price */}
               <div className="text-center mb-6">
-                <span className="text-5xl font-bold text-gray-900">{plan.price}</span>
-                <span className="text-gray-500">{plan.period}</span>
+                <span className="text-5xl font-bold text-gray-900 dark:text-white">{plan.price}</span>
+                <span className="text-gray-500 dark:text-slate-400">{plan.period}</span>
               </div>
 
               {/* Features */}
               <ul className="space-y-4 mb-8">
                 {plan.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="flex items-start space-x-3">
-                    <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-600 text-sm">{feature}</span>
+                    <Check className="w-5 h-5 text-green-500 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-600 dark:text-slate-400 text-sm">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -118,7 +118,7 @@ export default function Pricing() {
                 className={`block w-full py-4 text-center font-semibold rounded-xl transition-all duration-300 ${
                   plan.popular
                     ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white hover:shadow-lg hover:shadow-indigo-500/25'
-                    : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+                    : 'bg-gray-100 dark:bg-slate-800 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-slate-700'
                 }`}
               >
                 {plan.cta}

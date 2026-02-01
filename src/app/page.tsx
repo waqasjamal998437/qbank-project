@@ -4,10 +4,12 @@ import Benefits from '@/components/landing/Benefits';
 import Pricing from '@/components/landing/Pricing';
 import Testimonials from '@/components/landing/Testimonials';
 import Footer from '@/components/landing/Footer';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-gray-50 dark:bg-slate-950">
+      <ThemeToggle />
       <Navbar />
       <Hero />
       <Benefits />

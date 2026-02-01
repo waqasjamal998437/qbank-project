@@ -27,7 +27,7 @@ export function Layout({ children }: LayoutProps) {
   ];
 
   return (
-    <div className="flex h-screen bg-[#F8FAFC] overflow-hidden">
+    <div className="flex h-screen bg-[#F8FAFC] dark:bg-slate-950 overflow-hidden">
       <ThemeToggle />
       {/* Mobile Overlay */}
       {isSidebarOpen && (
@@ -42,7 +42,7 @@ export function Layout({ children }: LayoutProps) {
         className={`
           fixed lg:static inset-y-0 left-0 z-50
           w-64 
-          bg-white/80 backdrop-blur-md border-r border-white/20
+          bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-r border-slate-200 dark:border-slate-800
           shadow-[0_8px_30px_rgb(0,0,0,0.04)]
           transform transition-all duration-300 ease-in-out
           ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
@@ -50,15 +50,15 @@ export function Layout({ children }: LayoutProps) {
         `}
       >
         {/* Top: Logo */}
-        <div className="p-6 border-b border-slate-200/50">
+        <div className="p-6 border-b border-slate-200/50 dark:border-slate-800/50">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-xl font-semibold text-slate-800 tracking-tight">Qbank</h1>
-              <p className="text-xs text-slate-500 mt-0.5">v1.0</p>
+              <h1 className="text-xl font-semibold text-slate-800 dark:text-white tracking-tight">Qbank</h1>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">v1.0</p>
             </div>
             <button
               onClick={() => setIsSidebarOpen(false)}
-              className="lg:hidden p-2 text-slate-500 hover:text-slate-800 transition-colors"
+              className="lg:hidden p-2 text-slate-500 hover:text-slate-800 dark:hover:text-white transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -81,12 +81,12 @@ export function Layout({ children }: LayoutProps) {
                   transition-all duration-200
                   ${
                     isActive
-                      ? "bg-blue-50 text-blue-600 font-medium border border-blue-100"
-                      : "text-slate-600 hover:text-slate-800 hover:bg-slate-100 border border-transparent"
+                      ? "bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 font-medium border border-blue-100 dark:border-blue-900/50"
+                      : "text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 border border-transparent"
                   }
                 `}
               >
-                <Icon className={`w-5 h-5 ${isActive ? "text-blue-600" : ""}`} />
+                <Icon className={`w-5 h-5 ${isActive ? "text-blue-600 dark:text-blue-400" : ""}`} />
                 <span>{item.label}</span>
               </Link>
             );
@@ -94,8 +94,8 @@ export function Layout({ children }: LayoutProps) {
         </nav>
 
         {/* Bottom: User Profile */}
-        <div className="p-4 border-t border-slate-200/50">
-          <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-slate-200/50">
+        <div className="p-4 border-t border-slate-200/50 dark:border-slate-800/50">
+          <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm rounded-xl p-4 border border-slate-200/50 dark:border-slate-800/50">
             <ProfileSection username="Jamal" email="jamal@example.com" />
           </div>
         </div>
@@ -104,14 +104,14 @@ export function Layout({ children }: LayoutProps) {
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Mobile Header */}
-        <header className="lg:hidden bg-white/80 backdrop-blur-md border-b border-slate-200/50 p-4 flex items-center justify-between sticky top-0 z-30">
+        <header className="lg:hidden bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50 p-4 flex items-center justify-between sticky top-0 z-30">
           <button
             onClick={() => setIsSidebarOpen(true)}
-            className="p-2 text-slate-600 hover:text-slate-800 transition-colors"
+            className="p-2 text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors"
           >
             <Menu className="w-6 h-6" />
           </button>
-          <h1 className="text-lg font-semibold text-slate-800">Qbank</h1>
+          <h1 className="text-lg font-semibold text-slate-800 dark:text-white">Qbank</h1>
           <div className="w-10" /> {/* Spacer for centering */}
         </header>
 
