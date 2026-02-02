@@ -54,6 +54,13 @@ export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
   // ========================================
+  // 0. Skip auth checks for auth callback and verify-otp routes
+  // ========================================
+  if (pathname === "/auth/callback" || pathname === "/verify-otp") {
+    return response;
+  }
+
+  // ========================================
   // 1. Protect /admin routes (full admin panel)
   // ========================================
   if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
@@ -150,20 +157,6 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(verifyUrl);
     }
 
-    return response;
-  }
-
-  // ========================================
-  // 6. Allow /auth/callback route for magic link exchange
-  // ========================================
-  if (pathname === "/auth/callback") {
-    return response;
-  }
-
-  // ========================================
-  // 7. Allow /verify-otp page access
-  // ========================================
-  if (pathname === "/verify-otp") {
     return response;
   }
 
