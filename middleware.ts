@@ -56,7 +56,7 @@ export async function middleware(request: NextRequest) {
   // ========================================
   // 0. Skip auth checks for auth callback and verify-otp routes
   // ========================================
-  if (pathname === "/auth/callback" || pathname === "/verify-otp") {
+  if (pathname === "/auth/callback" || pathname === "/auth/confirm" || pathname === "/verify-otp") {
     return response;
   }
 
@@ -165,8 +165,9 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Allow auth callback route
+    // Allow auth callback routes
     "/auth/callback",
+    "/auth/confirm",
     // Protect admin routes
     "/admin/:path*",
     // Protect dashboard and profile routes

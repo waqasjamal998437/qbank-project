@@ -98,7 +98,7 @@ export default function SignupPage() {
             current_year: data.currentYear,
             graduation_year: data.graduationYear,
           },
-          emailRedirectTo: `${origin}/auth/callback`,
+          emailRedirectTo: `${origin}/auth/confirm`,
         },
       });
 
