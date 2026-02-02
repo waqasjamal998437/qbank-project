@@ -1,14 +1,10 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { createClient } from '@supabase/supabase-js';
+import { createServerClient } from '@supabase/ssr';
 
-// Initialize Supabase client for middleware
+// Initialize Supabase clients for middleware
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-
-const supabase = supabaseUrl && supabaseAnonKey
-  ? createClient(supabaseUrl, supabaseAnonKey)
-  : null;
 
 /**
  * Check if user has admin role in app_metadata
@@ -21,8 +17,23 @@ function isAdmin(user: { app_metadata?: Record<string, unknown> | null }): boole
 /**
  * Check if user is authenticated (has valid session)
  */
-async function isAuthenticated(): Promise<boolean> {
-  if (!supabase) return false;
+async function isAuthenticated(request: NextRequest): Promise<boolean> {
+  if (!supabaseUrl || !supabaseAnonKey) return false;
+  
+  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+    cookies: {
+      get(name: string) {
+        return request.cookies.get(name)?.value;
+      },
+      set(name: string, value: string, options: any) {
+        request.cookies.set(name, value);
+      },
+      remove(name: string, options: any) {
+        request.cookies.set(name, '');
+      },
+    },
+  });
+  
   const { data: { session }, error } = await supabase.auth.getSession();
   return !error && !!session?.user;
 }
@@ -30,8 +41,23 @@ async function isAuthenticated(): Promise<boolean> {
 /**
  * Check if user is authenticated and email is confirmed
  */
-async function isAuthenticatedAndVerified(): Promise<boolean> {
-  if (!supabase) return false;
+async function isAuthenticatedAndVerified(request: NextRequest): Promise<boolean> {
+  if (!supabaseUrl || !supabaseAnonKey) return false;
+  
+  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+    cookies: {
+      get(name: string) {
+        return request.cookies.get(name)?.value;
+      },
+      set(name: string, value: string, options: any) {
+        request.cookies.set(name, value);
+      },
+      remove(name: string, options: any) {
+        request.cookies.set(name, '');
+      },
+    },
+  });
+  
   const { data: { session }, error } = await supabase.auth.getSession();
   if (error || !session?.user) return false;
   
@@ -42,8 +68,23 @@ async function isAuthenticatedAndVerified(): Promise<boolean> {
 /**
  * Check if user is admin
  */
-async function isAuthenticatedAdmin(): Promise<boolean> {
-  if (!supabase) return false;
+async function isAuthenticatedAdmin(request: NextRequest): Promise<boolean> {
+  if (!supabaseUrl || !supabaseAnonKey) return false;
+  
+  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+    cookies: {
+      get(name: string) {
+        return request.cookies.get(name)?.value;
+      },
+      set(name: string, value: string, options: any) {
+        request.cookies.set(name, value);
+      },
+      remove(name: string, options: any) {
+        request.cookies.set(name, '');
+      },
+    },
+  });
+  
   const { data: { session }, error } = await supabase.auth.getSession();
   if (error || !session?.user) return false;
   return isAdmin(session.user);
@@ -64,18 +105,18 @@ export async function middleware(request: NextRequest) {
   // 1. Protect /admin routes (full admin panel)
   // ========================================
   if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
-    if (!supabase) {
+    if (!supabaseUrl || !supabaseAnonKey) {
       // Supabase not configured, redirect to login
       const loginUrl = new URL("/admin/login", request.url);
       loginUrl.searchParams.set("redirect", pathname);
       return NextResponse.redirect(loginUrl);
     }
 
-    const isAdminUser = await isAuthenticatedAdmin();
+    const isAdminUser = await isAuthenticatedAdmin(request);
 
     if (!isAdminUser) {
       // Not logged in or not admin - redirect based on auth status
-      const isAuth = await isAuthenticated();
+      const isAuth = await isAuthenticated(request);
       if (!isAuth) {
         // Not logged in at all, redirect to admin login
         const loginUrl = new URL("/admin/login", request.url);
@@ -98,8 +139,8 @@ export async function middleware(request: NextRequest) {
   // 2. Handle /admin/login special case
   // ========================================
   if (pathname === "/admin/login") {
-    if (supabase) {
-      const isAdminUser = await isAuthenticatedAdmin();
+    if (supabaseUrl && supabaseAnonKey) {
+      const isAdminUser = await isAuthenticatedAdmin(request);
       if (isAdminUser) {
         // Already authenticated as admin, redirect to admin dashboard
         return NextResponse.redirect(new URL("/admin/dashboard", request.url));
@@ -112,8 +153,8 @@ export async function middleware(request: NextRequest) {
   // 3. Handle /login special case (prevent infinite redirect)
   // ========================================
   if (pathname === "/login") {
-    if (supabase) {
-      const isAuth = await isAuthenticated();
+    if (supabaseUrl && supabaseAnonKey) {
+      const isAuth = await isAuthenticated(request);
       if (isAuth) {
         // Already authenticated, redirect to dashboard
         return NextResponse.redirect(new URL("/dashboard", request.url));
@@ -126,14 +167,14 @@ export async function middleware(request: NextRequest) {
   // 4. Protect /dashboard and /profile routes
   // ========================================
   if (pathname === "/dashboard" || pathname === "/profile") {
-    if (!supabase) {
+    if (!supabaseUrl || !supabaseAnonKey) {
       // Supabase not configured, redirect to login
       const loginUrl = new URL("/login", request.url);
       loginUrl.searchParams.set("redirect", pathname);
       return NextResponse.redirect(loginUrl);
     }
 
-    const isAuth = await isAuthenticated();
+    const isAuth = await isAuthenticated(request);
 
     if (!isAuth) {
       // Not logged in, redirect to user login
@@ -143,11 +184,24 @@ export async function middleware(request: NextRequest) {
     }
 
     // Check if user is verified (email confirmed)
-    const isVerified = await isAuthenticatedAndVerified();
+    const isVerified = await isAuthenticatedAndVerified(request);
     
     if (!isVerified) {
       // User is authenticated but email not confirmed - redirect to verify page
       // Get email from session for the redirect
+      const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+        cookies: {
+          get(name: string) {
+            return request.cookies.get(name)?.value;
+          },
+          set(name: string, value: string, options: any) {
+            request.cookies.set(name, value);
+          },
+          remove(name: string, options: any) {
+            request.cookies.set(name, '');
+          },
+        },
+      });
       const { data: { session } } = await supabase.auth.getSession();
       const email = session?.user?.email || '';
       const verifyUrl = new URL("/verify-otp", request.url);

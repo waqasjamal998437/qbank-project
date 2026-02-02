@@ -3,7 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "pnpm": {
-    "onlyBuiltDependencies": ["prisma", "@prisma/engines", "sharp", "esbuild"]
+    "onlyBuiltDependencies": [
+      "prisma",
+      "@prisma/engines",
+      "sharp",
+      "esbuild"
+    ]
   },
   "scripts": {
     "dev": "next dev",
@@ -16,6 +21,7 @@
     "@babel/runtime": "^7.24.0",
     "@prisma/adapter-pg": "^7.3.0",
     "@prisma/client": "^7.3.0",
+    "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.93.3",
     "clsx": "^2.1.1",
     "date-fns": "^3.0.0",

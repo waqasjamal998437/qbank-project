@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { BookOpen, Eye, EyeOff, ArrowRight, AlertCircle } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
+import { getAuthConfirmURL } from '@/lib/auth-utils';
 
 // Type for Supabase client
 type SupabaseClient = ReturnType<typeof createClient> | null;
@@ -98,7 +99,7 @@ export default function SignupPage() {
             current_year: data.currentYear,
             graduation_year: data.graduationYear,
           },
-          emailRedirectTo: `${origin}/auth/confirm`,
+          emailRedirectTo: getAuthConfirmURL(),
         },
       });
 

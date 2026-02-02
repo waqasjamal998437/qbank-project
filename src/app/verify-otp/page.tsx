@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { CheckCircle, AlertCircle, Mail, ArrowLeft, RefreshCw } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
+import { getAuthConfirmURL } from '@/lib/auth-utils';
 
 // Initialize Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
@@ -26,6 +27,20 @@ function VerifyOtpContent() {
   const [success, setSuccess] = useState(false);
   const [resending, setResending] = useState(false);
   const [resendSuccess, setResendSuccess] = useState(false);
+  
+  // Countdown timer state (60 seconds)
+  const [countdown, setCountdown] = useState(60);
+  const [canResend, setCanResend] = useState(false);
+
+  // Countdown timer effect
+  useEffect(() => {
+    if (countdown > 0) {
+      const timerId = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timerId);
+    } else {
+      setCanResend(true);
+    }
+  }, [countdown]);
 
   // Refs for each OTP input
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -127,8 +142,7 @@ function VerifyOtpContent() {
 
   // Resend OTP
   const handleResendOtp = async () => {
-    if (!email || !supabase) {
-      setError('Cannot resend OTP. Please go back and try signing in again.');
+    if (!canResend || !email || !supabase) {
       return;
     }
 
@@ -140,7 +154,7 @@ function VerifyOtpContent() {
       const { error: resendError } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/confirm`,
+          emailRedirectTo: getAuthConfirmURL(),
         },
       });
 
@@ -149,6 +163,9 @@ function VerifyOtpContent() {
       } else {
         setResendSuccess(true);
         setError(null);
+        // Reset countdown timer to 60 seconds
+        setCountdown(60);
+        setCanResend(false);
       }
     } catch (err) {
       setError('Failed to resend code. Please try again.');
@@ -339,11 +356,19 @@ function VerifyOtpContent() {
               Didn't receive the code?{' '}
               <button
                 onClick={handleResendOtp}
-                disabled={resending}
-                className="text-gray-900 font-medium hover:text-indigo-600 transition-colors inline-flex items-center space-x-1 disabled:opacity-50"
+                disabled={resending || !canResend}
+                className={`font-medium hover:transition-colors inline-flex items-center space-x-1 disabled:opacity-50 ${
+                  canResend ? 'text-gray-900 hover:text-indigo-600' : 'text-gray-400 cursor-not-allowed'
+                }`}
               >
                 <RefreshCw className={`w-4 h-4 ${resending ? 'animate-spin' : ''}`} />
-                <span>{resending ? 'Sending...' : 'Resend code'}</span>
+                <span>
+                  {resending
+                    ? 'Sending...'
+                    : canResend
+                      ? 'Resend code'
+                      : `Resend in ${countdown}s`}
+                </span>
               </button>
             </p>
           </div>
